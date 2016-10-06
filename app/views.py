@@ -13,14 +13,24 @@ def date_handler(obj):
 @csrf_exempt
 def get_all_venues_events(request):
     venue_list = []
+    monday = [{'table': [{'id': 1}, {'id': 2}], 'package': [], 'ticket': []}]
+    tuesday = [{'table': [], 'package': [{'id': 1}, {'id': 2}], 'ticket': []}]
+    wednesday = [{'table': [], 'package': [{'id': 1}, {'id': 2}], 'ticket': []}]
+    thursday = [{'table': [], 'package': [], 'ticket': [{'id': 1}, {'id': 2}]}]
+    friday = [{'table': [], 'package': [], 'ticket': [{'id': 1}, {'id': 2}]}]
+    saturday = [{'table': [{'id': 1}, {'id': 2}], 'package': [{'id': 1}, {'id': 2}], 'ticket': [{'id': 1}, {'id': 2}]}]
+    sunday = [{'table': [], 'package': [{'id': 1}, {'id': 2}], 'ticket': [{'id': 1}, {'id': 2}]}]
+
+    day = [{'monday': monday, 'tuesday': tuesday, 'wednesday': wednesday, 'thursday': thursday, 'friday': friday,
+            'saturday': saturday, 'sunday': sunday}]
     venue_list.append({'id': 1, 'name': "venue1", 'category': "pub",
             'rating': 4, 'votes': 1000, 'coordinates': None, 'city': 1, 'image': "../../static/assets/images/sample.png",
-                'details': None})
+                'details': None, 'day': day})
 
     venue_list.append({'id': 2, 'name': "venue2", 'category': "cafe",
                        'rating': 3, 'votes': 3000, 'coordinates': None, 'city': 2,
                        'image': "../../static/assets/images/sample1.png",
-                       'details': None})
+                       'details': None, 'day': day})
 
     event_list = []
     event_list.append({'id': 1, 'name': "event1", 'venue': "venue1",
@@ -37,32 +47,89 @@ def get_all_venues_events(request):
 @csrf_exempt
 def get_venue(request):
     if request.POST['id'] == "1":
-        table_list = []
-        table_list.append({'id': 1, 'name': "table1", 'guests': 2,
-                           'min_spend': 1500, 'description': None})
-        table_list.append({'id': 2, 'name': "table2", 'guests': 3,
-                           'min_spend': 2000, 'description': None})
+        monday = [{'table': [{'id': 1}, {'id': 2}], 'package': [], 'ticket': []}]
+        tuesday = [{'table': [], 'package': [{'id': 1}, {'id': 2}], 'ticket': []}]
+        wednesday = [{'table': [], 'package': [{'id': 1}, {'id': 2}], 'ticket': []}]
+        thursday = [{'table': [], 'package': [], 'ticket': [{'id': 1}, {'id': 2}]}]
+        friday = [{'table': [], 'package': [], 'ticket': [{'id': 1}, {'id': 2}]}]
+        saturday = [{'table': [{'id': 1}, {'id': 2}], 'package': [{'id': 1}, {'id': 2}], 'ticket': [{'id': 1}, {'id': 2}]}]
+        sunday = [{'table': [], 'package': [{'id': 1}, {'id': 2}], 'ticket': [{'id': 1}, {'id': 2}]}]
 
-        package_list = []
-        package_list.append({'id': 1, 'name': "package1", 'guests': 2,
-                           'price': 2000, 'description': None})
-        package_list.append({'id': 2, 'name': "package2", 'guests': 3,
-                           'price': 2500, 'description': None})
-
-        ticket_list = []
-        ticket_list.append({'id': 1, 'name': "ticket1", 'guests': 1,
-                             'price': 500, 'description': None})
-        ticket_list.append({'id': 2, 'name': "ticket2", 'guests': 3,
-                            'price': 1000, 'description': None})
+        day = [{'monday': monday, 'tuesday': tuesday, 'wednesday': wednesday, 'thursday': thursday, 'friday': friday,
+                'saturday': saturday, 'sunday': sunday}]
 
         data = {'id': 1, 'name': "venue1", 'category': "pub",
                                'rating': 4, 'votes': 1000, 'coordinates': None, 'city': 1, 'image': "../../static/assets/images/sample.png",
-                               'details': None, 'tables': table_list, 'packages': package_list, 'tickets': ticket_list}
+                               'details': None, 'day': day}
         data = json.dumps(data)
         return HttpResponse(data, content_type="application/json")
     else:
         return HttpResponse("", content_type='application/json', status=404)
 
+
+@csrf_exempt
+def get_table(request):
+    if request.POST['id'] == "1":
+        data = {'id': 1, 'name': "table1", 'guests': 2,
+                    'min_spend': 1500, 'description': None}
+    elif request.POST['id'] == "2":
+        data = {'id': 2, 'name': "table2", 'guests': 3,
+                 'min_spend': 2000, 'description': None}
+    else:
+        return HttpResponse("", content_type='application/json', status=404)
+
+    data = json.dumps(data)
+    return HttpResponse(data, content_type="application/json")
+
+
+@csrf_exempt
+def get_package(request):
+    if request.POST['id'] == "1":
+        data = {'id': 1, 'name': "package1", 'guests': 2,
+                 'price': 1500, 'description': None}
+    elif request.POST['id'] == "2":
+        data = {'id': 2, 'name': "package2", 'guests': 3,
+                 'price': 2000, 'description': None}
+    else:
+        return HttpResponse("", content_type='application/json', status=404)
+
+    data = json.dumps(data)
+    return HttpResponse(data, content_type="application/json")
+
+
+@csrf_exempt
+def get_ticket(request):
+    if request.POST['id'] == "1":
+        data = {'id': 1, 'name': "ticket1", 'guests': 2,
+                 'price': 1500, 'description': None}
+    elif request.POST['id'] == "2":
+        data = {'id': 2, 'name': "ticket2", 'guests': 3,
+                 'price': 2000, 'description': None}
+    else:
+        return HttpResponse("", content_type='application/json', status=404)
+
+    data = json.dumps(data)
+    return HttpResponse(data, content_type="application/json")
+
+
+
+# table_list = []
+# table_list.append({'id': 1, 'name': "table1", 'guests': 2,
+#                    'min_spend': 1500, 'description': None})
+# table_list.append({'id': 2, 'name': "table2", 'guests': 3,
+#                    'min_spend': 2000, 'description': None})
+#
+# package_list = []
+# package_list.append({'id': 1, 'name': "package1", 'guests': 2,
+#                    'price': 2000, 'description': None})
+# package_list.append({'id': 2, 'name': "package2", 'guests': 3,
+#                    'price': 2500, 'description': None})
+#
+# ticket_list = []
+# ticket_list.append({'id': 1, 'name': "ticket1", 'guests': 1,
+#                      'price': 500, 'description': None})
+# ticket_list.append({'id': 2, 'name': "ticket2", 'guests': 3,
+#                     'price': 1000, 'description': None})
 
 @csrf_exempt
 def get_event(request):
@@ -148,9 +215,23 @@ def login(request):
 @csrf_exempt
 def get_all_cities(request):
     city_list = []
-    city_list.append({'id': 1, 'code': "C!", 'name': "city1"})
+    city_list.append({'id': 1, 'code': "C1", 'name': "city1"})
     city_list.append({'id': 2, 'code': "C2", 'name': "city2"})
     city_list.append({'id': 3, 'code': "C3", 'name': "city3"})
     data = {'cities': city_list}
     data = json.dumps(data)
     return HttpResponse(data, content_type="application/json")
+
+
+@csrf_exempt
+def get_card(request):
+    if request.POST['id'] == "1":
+        data = {'id': 1, 'full_name': "user1", 'card_number': "1234234534564567", 'expiry_date': "2020-07-17", 'cvv': "456"}
+    elif request.POST['id'] == "2":
+        data = {'id': 1, 'full_name': "user2", 'card_number': "2345123445673456", 'expiry_date': "2018-01-19", 'cvv': "123"}
+    else:
+        return HttpResponse("", content_type="application/json", status=404)
+
+    data = json.dumps(data)
+    return HttpResponse(data, content_type="application/json")
+

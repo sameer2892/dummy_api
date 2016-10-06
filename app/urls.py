@@ -9,5 +9,9 @@ urlpatterns = [
     url(r'^register$', views.register, name="register"),
     url(r'^login$', views.login, name="login"),
     url(r'^get_menu$', views.get_menu, name="get_menu"),
+    url(r'^get_card$', views.get_card, name="get_card"),
+    url(r'^get_table$', views.get_table, name="get_table"),
+    url(r'^get_package$', views.get_package, name="get_package"),
+    url(r'^get_ticket$', views.get_ticket, name="get_ticket"),
     url(r'^get_all_cities$', views.get_all_cities, name="get_all_cities")
 ]
