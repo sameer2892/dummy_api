@@ -74,6 +74,21 @@ def get_event(request):
         return HttpResponse("", content_type='application/json', status=404)
 
 
+@csrf_exempt
+def get_menu(request):
+    if request.POST['id'] == "1":
+        menu_list = []
+        menu_list.append({'id': 1, 'name': "item1", 'price': 500, 'description': None})
+        menu_list.append({'id': 2, 'name': "item2", 'price': 700, 'description': None})
+        menu_list.append({'id': 3, 'name': "item3", 'price': 900, 'description': None})
+        menu_list.append({'id': 4, 'name': "item4", 'price': 1000, 'description': None})
+        data = {'items': menu_list}
+        data = json.dumps(data)
+        return HttpResponse(data, content_type="application/json")
+    else:
+        return HttpResponse("", content_type='application/json', status=404)
+
+
 # @csrf_exempt
 # def get_my_bookings(request):
 #     customer_id = request.POST['id']
@@ -126,5 +141,16 @@ def login(request):
         message = "NP"
 
     data = {'message': message}
+    data = json.dumps(data)
+    return HttpResponse(data, content_type="application/json")
+
+
+@csrf_exempt
+def get_all_cities(request):
+    city_list = []
+    city_list.append({'id': 1, 'code': "C!", 'name': "city1"})
+    city_list.append({'id': 2, 'code': "C2", 'name': "city2"})
+    city_list.append({'id': 3, 'code': "C3", 'name': "city3"})
+    data = {'cities': city_list}
     data = json.dumps(data)
     return HttpResponse(data, content_type="application/json")

@@ -7,5 +7,7 @@ urlpatterns = [
     url(r'^get_venue$', views.get_venue, name="get_venue"),
     url(r'^get_event$', views.get_event, name="get_event"),
     url(r'^register$', views.register, name="register"),
-    url(r'^login$', views.login, name="login")
+    url(r'^login$', views.login, name="login"),
+    url(r'^get_menu$', views.get_menu, name="get_menu"),
+    url(r'^get_all_cities$', views.get_all_cities, name="get_all_cities")
 ]
